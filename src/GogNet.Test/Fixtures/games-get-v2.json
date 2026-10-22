@@ -1,0 +1,15 @@
+{
+  "id": "1425308948",
+  "slug": "afterlife",
+  "productType": "GAME",
+  "releaseStatus": "unavailable",
+  "isUsingDosBox": true,
+  "_links": {
+    "self": { "href": "https://api.gog.com/v2/games/1425308948?locale=en-US" },
+    "store": { "href": "https:\/\/www.gog.com\/en\/game\/afterlife" },
+    "icon": { "href": "https:\/\/images.gog-statics.com\/03282e1ce9e8c15abf66cb86b1334cd560ea6fd98140d0dc64a054eb4654e239.png" },
+    "boxArtImage": { "href": "https:\/\/images.gog-statics.com\/7be9b210360d6c29ed5e4558c8b3716b6ebe7a6f9b431b467ab0b72f100f24ed.jpg" },
+    "backgroundImage": { "href": "https:\/\/images.gog-statics.com\/eecb22be8ce3b96b46e061012d41e88e4985ed8e370efcec2e18403572515aed.jpg" },
+    "galaxyBackgroundImage": { "href": "https:\/\/images.gog-statics.com\/e62cc7a910836ed1f95c65331f06fa9677e995ba286993e3ad0e38f673678cc2.jpg" }
+  }
+}

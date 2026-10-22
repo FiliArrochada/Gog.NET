@@ -1,0 +1,46 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+    <TargetFrameworks>net10.0;net48</TargetFrameworks>
+    <LangVersion>latest</LangVersion>
+    <AssemblyName>GogNet</AssemblyName>
+    <PackageId>GogNet</PackageId>
+    <OutputType>Library</OutputType>
+    <Authors>FiliArrochada</Authors>
+    <Company>FiliArrochada</Company>
+    <Copyright>Copyright (c) 2026 FiliArrochada</Copyright>
+    <AssemblyTitle>GOG.com API Client</AssemblyTitle>
+    <Description>A .NET client library for the public GOG.com APIs (v2 games, v1 products).</Description>
+    <RootNamespace>GogNet</RootNamespace>
+    <!-- Version tracks the GOG API version (Major.Minor.Patch of the vendored spec);
+         the 4th revision component is bumped for client-only changes against the same API version. -->
+    <Version>2.0.0.1</Version>
+    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\GogNet.xml</DocumentationFile>
+    <!-- CS1591: undocumented members (Refit interfaces); CS8073: value-type != null in Equals -->
+    <!-- NU1510: System.Text.Json / System.ComponentModel.Annotations are in-box on the
+         modern TFMs; they are referenced for the net48 leg, which does need them. -->
+    <NoWarn>$(NoWarn);CS1591;CS8073;NU1510</NoWarn>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageProjectUrl>https://github.com/FiliArrochada/Gog.NET</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/FiliArrochada/Gog.NET.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReleaseNotes>Initial client: GOG v2 games (box art, background, store links) and v1 products (Galaxy logos).</PackageReleaseNotes>
+    <Nullable>annotations</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Refit" />
+    <!-- Reflection request builder: on net48 the Refit source-generated stubs are not
+         resolved, so RestService.For<T> needs it. Keep version-locked to Refit. -->
+    <PackageReference Include="Refit.Reflection" />
+    <PackageReference Include="System.Text.Json" />
+    <PackageReference Include="System.ComponentModel.Annotations" />
+  </ItemGroup>
+
+</Project>

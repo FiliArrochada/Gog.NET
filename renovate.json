@@ -1,0 +1,11 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended"],
+  "packageRules": [
+    {
+      "description": "Keep Refit and its satellite packages on one version",
+      "groupName": "Refit",
+      "matchPackageNames": ["Refit", "Refit.Reflection"]
+    }
+  ]
+}

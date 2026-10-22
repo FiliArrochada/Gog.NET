@@ -1,0 +1,114 @@
+openapi: 3.0.3
+info:
+  title: GOG.com public API (subset)
+  version: 2.0.0
+  description: >
+    Hand-authored spec for the endpoints GogNet implements. GOG publishes no official
+    OpenAPI document; see api/README.md. All endpoints below are anonymous - no token,
+    no account, no user data.
+servers:
+  - url: https://api.gog.com
+paths:
+  /v2/games/{id}:
+    get:
+      operationId: getGame
+      summary: One game, with artwork and store links
+      parameters:
+        - { name: id, in: path, required: true, schema: { type: string } }
+        - { name: locale, in: query, required: false, schema: { type: string } }
+      responses:
+        "200":
+          description: The game
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Game" }
+        "404": { description: Unknown product id }
+  /v2/games:
+    get:
+      operationId: getGames
+      summary: Several games in one call
+      parameters:
+        - name: ids
+          in: query
+          required: true
+          description: Comma-joined product ids, sent as a single parameter.
+          schema: { type: string }
+        - { name: locale, in: query, required: false, schema: { type: string } }
+      responses:
+        "200":
+          description: The games
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/GameList" }
+  /products/{id}:
+    get:
+      operationId: getProduct
+      summary: v1 product (Galaxy tile logos; no box art)
+      parameters:
+        - { name: id, in: path, required: true, schema: { type: string } }
+        - name: expand
+          in: query
+          required: false
+          description: Comma-joined expansions; "images" is needed for the image block.
+          schema: { type: string }
+      responses:
+        "200":
+          description: The product
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Product" }
+components:
+  schemas:
+    Link:
+      type: object
+      properties:
+        href:
+          type: string
+          description: May be protocol-relative and may contain {formatter}/{ext} placeholders.
+    GameLinks:
+      type: object
+      properties:
+        self: { $ref: "#/components/schemas/Link" }
+        store: { $ref: "#/components/schemas/Link" }
+        support: { $ref: "#/components/schemas/Link" }
+        forum: { $ref: "#/components/schemas/Link" }
+        icon: { $ref: "#/components/schemas/Link" }
+        boxArtImage: { $ref: "#/components/schemas/Link" }
+        backgroundImage: { $ref: "#/components/schemas/Link" }
+        galaxyBackgroundImage: { $ref: "#/components/schemas/Link" }
+    Game:
+      type: object
+      properties:
+        id: { type: string }
+        slug: { type: string }
+        productType: { type: string }
+        releaseStatus: { type: string }
+        isUsingDosBox: { type: boolean }
+        _links: { $ref: "#/components/schemas/GameLinks" }
+    GameList:
+      type: object
+      properties:
+        items:
+          type: array
+          items: { $ref: "#/components/schemas/Game" }
+        _embedded:
+          type: object
+          properties:
+            items:
+              type: array
+              items: { $ref: "#/components/schemas/Game" }
+    ProductImages:
+      type: object
+      properties:
+        logo: { type: string }
+        logo2x: { type: string }
+        background: { type: string }
+        icon: { type: string }
+        sidebarIcon: { type: string }
+    Product:
+      type: object
+      properties:
+        id: { type: integer, format: int64 }
+        title: { type: string }
+        slug: { type: string }
+        images: { $ref: "#/components/schemas/ProductImages" }
